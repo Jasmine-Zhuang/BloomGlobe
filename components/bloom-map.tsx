@@ -1,29 +1,61 @@
 import { Destination } from "@/lib/types";
-import { isPeakMonth, projectCoordinates } from "@/lib/utils";
+import { EmptyState } from "@/components/ui/empty-state";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { cn, getSeasonalStatus, isPeakMonth } from "@/lib/utils";
+import {
+  WORLD_BORDERS_PATH,
+  WORLD_COUNTRY_PATHS,
+  WORLD_GRATICULE_PATH,
+  projectWorldCoordinates,
+} from "@/lib/world-map";
 
 interface BloomMapProps {
   destinations: Destination[];
   selectedDestinationId: string | null;
   selectedMonth: number;
   wishlistIds: string[];
+  isRefreshing: boolean;
   onSelectDestination: (destination: Destination) => void;
 }
+
+const REGION_LABELS = [
+  { label: "North America", x: 188, y: 156 },
+  { label: "South America", x: 282, y: 340 },
+  { label: "Europe", x: 494, y: 136 },
+  { label: "Africa", x: 520, y: 264 },
+  { label: "Asia", x: 686, y: 164 },
+  { label: "Oceania", x: 822, y: 330 },
+];
 
 export function BloomMap({
   destinations,
   selectedDestinationId,
   selectedMonth,
   wishlistIds,
+  isRefreshing,
   onSelectDestination,
 }: BloomMapProps) {
+  const visibleDestinations = [...destinations].sort((a, b) => {
+    if (a.id === selectedDestinationId) {
+      return 1;
+    }
+
+    if (b.id === selectedDestinationId) {
+      return -1;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+
   return (
-    <section className="glass-card overflow-hidden rounded-[1.9rem] border border-white/70 shadow-bloom">
-      <div className="border-b border-[#eadbd3] px-5 py-4 sm:px-6">
-        <p className="text-xs uppercase tracking-[0.24em] text-rose/80">Explore The Globe</p>
-        <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="font-serif text-2xl text-pine">Where blooms are unfolding</h2>
-          <p className="text-sm text-pine/70">{destinations.length} visible markers</p>
-        </div>
+    <section className="glass-card overflow-hidden rounded-[1.95rem] border border-white/70 shadow-bloom">
+      <div className="border-b border-[#eadbd3] px-5 py-5 sm:px-6">
+        <SectionHeading
+          eyebrow="Explore The Globe"
+          title="Where blooms are unfolding"
+          description="Open a destination to compare bloom timing, signature scenery, and whether it deserves a place on your wishlist."
+          aside={`${destinations.length} visible marker${destinations.length === 1 ? "" : "s"}`}
+        />
       </div>
 
       <div className="map-grid relative aspect-[16/9] w-full bg-[radial-gradient(circle_at_top,#fbf2eb,transparent_45%),linear-gradient(180deg,#fcfaf7_0%,#f3ece5_100%)]">
@@ -33,32 +65,56 @@ export function BloomMap({
           fill="none"
           aria-hidden="true"
         >
-          <g opacity="0.78">
-            <path
-              d="M100 144c37-44 88-68 155-74 46 5 75 17 90 38 19 27 35 38 62 42 25 3 46 13 62 31 27 28 30 54 8 80-27 32-27 57 4 75 26 16 32 33 22 55-17 35-63 54-136 57-77 4-129-7-157-33-25-24-32-47-21-68 8-14 7-31-4-52-18-36-47-61-87-76-28-10-43-29-45-58-3-20 13-46 47-77Z"
-              fill="#dfe5d7"
-            />
-            <path
-              d="M500 129c36-21 74-28 116-19 38 9 72 31 102 67 22 25 54 45 98 60 43 14 74 35 90 63 14 24 10 50-13 76-18 21-41 34-69 39-41 7-71 20-89 39-18 18-42 29-72 34-38 6-70 1-94-16-23-17-54-27-93-30-62-5-93-33-91-84 1-22 11-42 29-59 21-19 29-40 24-63-8-35 11-70 62-107Z"
-              fill="#d8e1d2"
-            />
-            <path
-              d="M787 324c28 2 56 14 82 37 22 21 29 43 18 68-11 25-30 41-59 47-35 7-68 0-101-24-30-21-39-45-29-74 8-25 22-42 42-50 14-4 30-6 47-4Z"
-              fill="#dfe7d9"
-            />
-            <path
-              d="M266 338c21-14 46-18 73-12 29 6 50 22 62 48 11 23 13 45 6 66-7 21-24 34-49 41-35 8-66 0-93-24-23-21-33-42-31-65 2-21 13-39 32-54Z"
-              fill="#e8eee2"
-            />
+          <defs>
+            <linearGradient id="ocean-fill" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stopColor="#fffaf5" />
+              <stop offset="100%" stopColor="#f4ede5" />
+            </linearGradient>
+            <linearGradient id="land-fill" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stopColor="#dde8db" />
+              <stop offset="100%" stopColor="#cfdcc9" />
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="1000" height="520" fill="url(#ocean-fill)" />
+          <path d={WORLD_GRATICULE_PATH} stroke="rgba(151,163,139,0.16)" strokeWidth="1" />
+          <g opacity="0.98">
+            {WORLD_COUNTRY_PATHS.map((country) => (
+              <path key={country.id} d={country.d} fill="url(#land-fill)" stroke="rgba(255,255,255,0.55)" strokeWidth="0.9" />
+            ))}
+          </g>
+          <path d={WORLD_BORDERS_PATH} stroke="rgba(118,132,111,0.36)" strokeWidth="0.8" />
+          <g>
+            {REGION_LABELS.map((region) => (
+              <text
+                key={region.label}
+                x={region.x}
+                y={region.y}
+                textAnchor="middle"
+                fill="rgba(55,68,60,0.42)"
+                fontSize="14"
+                letterSpacing="0.24em"
+                className="font-sans uppercase"
+              >
+                {region.label}
+              </text>
+            ))}
           </g>
         </svg>
 
-        <div className="absolute inset-0">
-          {destinations.map((destination) => {
-            const { x, y } = projectCoordinates(destination.coordinates.lat, destination.coordinates.lng);
+        <div className={cn("absolute inset-0 transition-opacity duration-300", isRefreshing && "opacity-45")}>
+          {visibleDestinations.map((destination) => {
+            const { x, y } = projectWorldCoordinates(destination.coordinates.lat, destination.coordinates.lng);
             const isActive = destination.id === selectedDestinationId;
             const isPeak = isPeakMonth(destination, selectedMonth);
             const isWishlisted = wishlistIds.includes(destination.id);
+            const markerSize = isActive ? 18 : isPeak ? 16 : 14;
+            const previewAnchorClass =
+              x > 760
+                ? "right-3 translate-x-0"
+                : x < 240
+                  ? "left-3 translate-x-0"
+                  : "left-1/2 -translate-x-1/2";
 
             return (
               <button
@@ -66,14 +122,17 @@ export function BloomMap({
                 type="button"
                 onClick={() => onSelectDestination(destination)}
                 className="group absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${x / 10}%`, top: `${y / 5.2}%` }}
+                style={{ left: x, top: y }}
                 aria-label={`View ${destination.name}`}
               >
                 <span
                   className={[
-                    "flex h-4 w-4 items-center justify-center rounded-full border-2 border-white transition-all",
-                    isActive ? "scale-125 bg-rose shadow-lg shadow-rose/25" : "bg-pine/85 group-hover:scale-110",
+                    "relative flex items-center justify-center rounded-full border-2 border-white transition-all",
+                    isActive
+                      ? "scale-125 bg-rose shadow-[0_0_0_10px_rgba(199,119,114,0.18)]"
+                      : "bg-pine/85 shadow-[0_0_0_8px_rgba(255,255,255,0.24)] group-hover:scale-110",
                   ].join(" ")}
+                  style={{ width: markerSize, height: markerSize }}
                 >
                   <span
                     className={[
@@ -83,34 +142,65 @@ export function BloomMap({
                   />
                 </span>
                 <span
+                  className={cn(
+                    "pointer-events-none absolute inset-0 rounded-full border border-rose/35 opacity-0 transition duration-300",
+                    isActive && "animate-ping opacity-100",
+                  )}
+                  style={{ width: markerSize + 18, height: markerSize + 18, left: -(markerSize + 18) / 2 + markerSize / 2, top: -(markerSize + 18) / 2 + markerSize / 2 }}
+                />
+                <span
                   className={[
-                    "pointer-events-none absolute left-1/2 top-6 min-w-max -translate-x-1/2 rounded-full px-3 py-1 text-xs transition",
+                    "pointer-events-none absolute top-7 min-w-[176px] max-w-[220px] rounded-[1rem] border border-white/80 px-3 py-3 text-left text-xs transition",
+                    previewAnchorClass,
                     isActive
-                      ? "bg-pine text-white opacity-100"
-                      : "bg-white/90 text-pine opacity-0 shadow-md group-hover:opacity-100",
+                      ? "bg-pine text-white opacity-100 shadow-xl"
+                      : "bg-white/95 text-pine opacity-0 shadow-md group-hover:opacity-100",
                   ].join(" ")}
                 >
-                  {destination.name}
+                  <span className="block text-[11px] uppercase tracking-[0.22em] opacity-65">
+                    {destination.flowerType}
+                  </span>
+                  <span className="mt-1 block text-sm font-medium">
+                    {destination.name}, {destination.country}
+                  </span>
+                  <span className="mt-1 block text-[11px] opacity-75">
+                    {getSeasonalStatus(destination, selectedMonth)}
+                  </span>
                 </span>
               </button>
             );
           })}
         </div>
 
-        <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-3 rounded-2xl bg-white/72 p-3 text-xs text-pine/75 backdrop-blur md:right-auto">
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-pine/85" />
-            Blooming now
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-rose" />
-            Selected
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-[#fde68a]" />
-            Peak month
-          </span>
-        </div>
+        {destinations.length > 0 ? (
+          <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-3 rounded-2xl bg-white/72 p-3 text-xs text-pine/75 backdrop-blur md:right-auto">
+            <span className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-pine/85" />
+              Blooming now
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-rose" />
+              Selected
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="h-3 w-3 rounded-full bg-[#fde68a]" />
+              Peak bloom likely
+            </span>
+          </div>
+        ) : (
+          <div className="absolute inset-x-6 bottom-6">
+            <EmptyState
+              title="No bloom destinations match this view"
+              description="Try a different month or broaden your filters to bring more destinations back onto the map."
+            />
+          </div>
+        )}
+
+        {isRefreshing ? (
+          <div className="pointer-events-none absolute right-4 top-4 rounded-full bg-white/85 px-4 py-2 text-xs uppercase tracking-[0.2em] text-pine/60 shadow-sm">
+            Refreshing bloom map
+          </div>
+        ) : null}
       </div>
     </section>
   );

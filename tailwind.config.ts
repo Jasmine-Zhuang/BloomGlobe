@@ -21,8 +21,8 @@ const config: Config = {
         bloom: "0 20px 60px rgba(115, 74, 59, 0.12)",
       },
       fontFamily: {
-        serif: ["Georgia", "Times New Roman", "serif"],
-        sans: ["ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "Times New Roman", "serif"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "hero-glow":

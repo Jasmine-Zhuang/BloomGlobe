@@ -4,6 +4,11 @@
 
 :root {
   color-scheme: light;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --surface: rgba(255, 252, 247, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --border-soft: rgba(231, 215, 210, 0.9);
 }
 
 html {
@@ -14,10 +19,11 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.75), transparent 30%),
-    linear-gradient(180deg, #fffaf4 0%, #f8f1ea 100%);
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.78), transparent 24%),
+    radial-gradient(circle at 20% 20%, rgba(244, 216, 208, 0.3), transparent 22%),
+    linear-gradient(180deg, #fffaf4 0%, #f8f1ea 46%, #f3ece3 100%);
   color: #2f352f;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 
 * {
@@ -43,29 +49,68 @@ body {
 }
 
 .bloom-shell::before {
-  top: 6rem;
+  top: 5rem;
   left: -5rem;
-  width: 16rem;
-  height: 16rem;
-  background: rgba(244, 216, 208, 0.55);
+  width: 19rem;
+  height: 19rem;
+  background: rgba(244, 216, 208, 0.5);
 }
 
 .bloom-shell::after {
-  top: 24rem;
+  top: 22rem;
   right: -4rem;
-  width: 18rem;
-  height: 18rem;
-  background: rgba(151, 163, 139, 0.15);
+  width: 20rem;
+  height: 20rem;
+  background: rgba(151, 163, 139, 0.14);
 }
 
 .map-grid {
   background-image:
-    linear-gradient(rgba(151, 163, 139, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(151, 163, 139, 0.08) 1px, transparent 1px);
-  background-size: 36px 36px;
+    linear-gradient(rgba(151, 163, 139, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(151, 163, 139, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
 .glass-card {
   backdrop-filter: blur(10px);
-  background: rgba(255, 252, 247, 0.8);
+  background: var(--surface);
+}
+
+.month-timeline {
+  scrollbar-width: none;
+  cursor: grab;
+  touch-action: pan-x;
+}
+
+.month-timeline::-webkit-scrollbar {
+  display: none;
+}
+
+.month-timeline:active {
+  cursor: grabbing;
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

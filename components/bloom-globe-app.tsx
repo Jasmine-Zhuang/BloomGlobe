@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { BloomMap } from "@/components/bloom-map";
 import { DestinationDetailPanel } from "@/components/destination-detail-panel";
 import { FilterBar } from "@/components/filter-bar";
@@ -10,14 +10,16 @@ import { WishlistStrip } from "@/components/wishlist-strip";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 import { DESTINATIONS, MONTHS } from "@/lib/mock-data";
 import { Destination, FlowerType, Region } from "@/lib/types";
-import { isDestinationInMonth, isPeakMonth } from "@/lib/utils";
+import { getRecommendedDestinations, isDestinationInMonth, isPeakMonth } from "@/lib/utils";
 
 export function BloomGlobeApp() {
   const currentMonth = new Date().getMonth();
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedFlower, setSelectedFlower] = useState<FlowerType | "All">("All");
   const [selectedRegion, setSelectedRegion] = useState<Region | "All">("All");
-  const [wishlistIds, setWishlistIds] = useLocalStorage<string[]>("bloom-globe-wishlist", []);
+  const [wishlistIds, setWishlistIds, isWishlistLoaded] = useLocalStorage<string[]>("bloom-globe-wishlist", []);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
 
   const filteredDestinations = useMemo(() => {
     return DESTINATIONS.filter((destination) => {
@@ -34,8 +36,8 @@ export function BloomGlobeApp() {
   }, [selectedFlower, selectedMonth, selectedRegion]);
 
   const recommendedDestinations = useMemo(() => {
-    return filteredDestinations.slice(0, 4);
-  }, [filteredDestinations]);
+    return getRecommendedDestinations(filteredDestinations, selectedMonth);
+  }, [filteredDestinations, selectedMonth]);
 
   const wishlistDestinations = useMemo(() => {
     return DESTINATIONS.filter((destination) => wishlistIds.includes(destination.id));
@@ -47,30 +49,66 @@ export function BloomGlobeApp() {
 
   useEffect(() => {
     if (!selectedDestination || !filteredDestinations.some((item) => item.id === selectedDestination.id)) {
-      setSelectedDestination(filteredDestinations[0] ?? DESTINATIONS[0]);
+      setSelectedDestination(filteredDestinations[0] ?? null);
     }
   }, [filteredDestinations, selectedDestination]);
 
+  useEffect(() => {
+    if (!isRefreshing) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setIsRefreshing(false), 380);
+    return () => window.clearTimeout(timeout);
+  }, [isRefreshing]);
+
+  useEffect(() => {
+    if (!saveFeedback) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setSaveFeedback(null), 2200);
+    return () => window.clearTimeout(timeout);
+  }, [saveFeedback]);
+
+  function handleMonthChange(month: number) {
+    if (month === selectedMonth) {
+      return;
+    }
+
+    setIsRefreshing(true);
+    startTransition(() => {
+      setSelectedMonth(month);
+    });
+  }
+
   function toggleWishlist(destinationId: string) {
+    const destination = DESTINATIONS.find((item) => item.id === destinationId);
+
     setWishlistIds((current) =>
       current.includes(destinationId)
         ? current.filter((id) => id !== destinationId)
         : [...current, destinationId],
     );
+
+    if (destination && !wishlistIds.includes(destinationId)) {
+      setSaveFeedback(`${destination.name} saved for later`);
+    }
   }
 
   return (
     <main className="bloom-shell">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col gap-10 px-4 pb-16 pt-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-screen w-full max-w-[1440px] flex-col gap-8 px-4 pb-16 pt-6 sm:gap-10 sm:px-6 lg:px-8">
         <HeroSection
           selectedMonth={selectedMonth}
-          onMonthChange={setSelectedMonth}
+          onMonthChange={handleMonthChange}
           count={filteredDestinations.length}
         />
 
         <WishlistStrip
           wishlistDestinations={wishlistDestinations}
           selectedMonthLabel={MONTHS[selectedMonth]}
+          isLoaded={isWishlistLoaded}
           onSelect={setSelectedDestination}
           onToggleWishlist={toggleWishlist}
         />
@@ -88,6 +126,7 @@ export function BloomGlobeApp() {
             selectedDestinationId={selectedDestination?.id ?? null}
             selectedMonth={selectedMonth}
             wishlistIds={wishlistIds}
+            isRefreshing={isRefreshing}
             onSelectDestination={setSelectedDestination}
           />
 
@@ -101,11 +140,23 @@ export function BloomGlobeApp() {
 
         <RecommendedSection
           destinations={recommendedDestinations}
+          selectedMonth={selectedMonth}
           selectedMonthLabel={MONTHS[selectedMonth]}
           wishlistIds={wishlistIds}
+          isRefreshing={isRefreshing}
           onSelectDestination={setSelectedDestination}
           onToggleWishlist={toggleWishlist}
         />
+      </div>
+
+      <div
+        className={[
+          "pointer-events-none fixed bottom-5 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/80 bg-white/88 px-4 py-3 text-sm text-pine shadow-bloom backdrop-blur transition-all duration-300",
+          saveFeedback ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+        ].join(" ")}
+        aria-live="polite"
+      >
+        {saveFeedback ?? "Saved for later"}
       </div>
     </main>
   );

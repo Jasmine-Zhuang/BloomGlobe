@@ -27,12 +27,24 @@ export type FlowerType =
   | "Sunflower"
   | "Rose"
   | "Jacaranda"
+  | "Plum Blossom"
+  | "Cosmos"
   | "Wildflower"
   | "Wisteria"
   | "Hydrangea"
   | "Lotus"
   | "Canola"
   | "Protea";
+
+export type ConfidenceLevel = "high" | "medium" | "low";
+
+export type DestinationBadge =
+  | "Peak Bloom"
+  | "Best 3-5 Day Trip"
+  | "Romantic"
+  | "Iconic"
+  | "City Escape"
+  | "Nature Escape";
 
 export interface Destination {
   id: string;
@@ -50,6 +62,11 @@ export interface Destination {
   longDescription: string;
   signatureExperience: string;
   travelTip: string;
+  idealTripLength: string;
+  badges: DestinationBadge[];
+  confidence?: ConfidenceLevel;
+  variabilityNote?: string;
+  imageHint?: string;
   image: {
     from: string;
     to: string;
