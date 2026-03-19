@@ -87,6 +87,12 @@ const FLOWER_ART = {
     petal: "#f2c738",
     accent: "#64824a",
   },
+  Rapeseed: {
+    sky: "#fffbe7",
+    ground: "#f7e692",
+    petal: "#e9c33b",
+    accent: "#667f45",
+  },
   Protea: {
     sky: "#fff6f1",
     ground: "#f0c8b4",
@@ -268,6 +274,64 @@ function renderFlowerCluster(flowerType: FlowerType, art: (typeof FLOWER_ART)[Fl
           ))}
         </>
       );
+    case "Plum Blossom":
+      return (
+        <>
+          {[
+            [122, 214],
+            [206, 174],
+            [286, 228],
+            [368, 170],
+            [452, 220],
+            [536, 176],
+            [620, 226],
+            [700, 184],
+          ].map(([x, y]) => (
+            <g key={`${x}-${y}`}>
+              {renderStem(x, y + 10, 370, art.accent)}
+              {renderPetalBurst(x, y, art.petal, "#ffe7a6", 5, 12)}
+            </g>
+          ))}
+        </>
+      );
+    case "Cosmos":
+      return (
+        <>
+          {[
+            [100, 228],
+            [176, 184],
+            [252, 236],
+            [330, 178],
+            [406, 228],
+            [486, 182],
+            [564, 236],
+            [642, 190],
+            [718, 232],
+          ].map(([x, y]) => (
+            <g key={`${x}-${y}`}>
+              {renderStem(x, y + 14, 374, art.accent)}
+              {Array.from({ length: 8 }).map((_, index) => {
+                const angle = (Math.PI * 2 * index) / 8;
+                const petalX = x + Math.cos(angle) * 14;
+                const petalY = y + Math.sin(angle) * 14;
+
+                return (
+                  <ellipse
+                    key={`${x}-${y}-${index}`}
+                    cx={petalX}
+                    cy={petalY}
+                    rx="8"
+                    ry="18"
+                    fill={art.petal}
+                    transform={`rotate(${(angle * 180) / Math.PI + 90} ${petalX} ${petalY})`}
+                  />
+                );
+              })}
+              <circle cx={x} cy={y} r="7" fill="#f2cf62" />
+            </g>
+          ))}
+        </>
+      );
     case "Wildflower":
       return (
         <>
@@ -366,6 +430,7 @@ function renderFlowerCluster(flowerType: FlowerType, art: (typeof FLOWER_ART)[Fl
         </>
       );
     case "Canola":
+    case "Rapeseed":
       return (
         <>
           {Array.from({ length: 10 }).map((_, index) => {

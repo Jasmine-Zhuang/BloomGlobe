@@ -1,0 +1,198 @@
+{
+  "common": {
+    "appName": "Bloom Globe",
+    "language": {
+      "label": "语言",
+      "english": "EN",
+      "chinese": "中文"
+    },
+    "buttons": {
+      "save": "加入心愿清单",
+      "saved": "已加入心愿清单",
+      "remove": "移出心愿清单",
+      "mapView": "地图视图",
+      "globeView": "地球视图",
+      "previousMonth": "上个月",
+      "nextMonth": "下个月"
+    },
+    "image": {
+      "preview": "目的地印象"
+    },
+    "status": {
+      "refreshingMap": "正在更新花期地图"
+    }
+  },
+  "months": {
+    "editorial": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+    "short": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    "numeric": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  },
+  "regions": {
+    "North America": "北美洲",
+    "South America": "南美洲",
+    "Europe": "欧洲",
+    "Asia": "亚洲",
+    "Africa": "非洲",
+    "Oceania": "大洋洲"
+  },
+  "flowers": {
+    "Cherry Blossom": "樱花",
+    "Tulip": "郁金香",
+    "Lavender": "薰衣草",
+    "Sunflower": "向日葵",
+    "Rapeseed": "油菜花",
+    "Rose": "玫瑰",
+    "Jacaranda": "蓝花楹",
+    "Plum Blossom": "梅花",
+    "Cosmos": "波斯菊",
+    "Wildflower": "野花",
+    "Wisteria": "紫藤",
+    "Hydrangea": "绣球花",
+    "Lotus": "莲花",
+    "Canola": "油菜花",
+    "Protea": "帝王花"
+  },
+  "badges": {
+    "Peak Bloom": "盛放期",
+    "Best 3-5 Day Trip": "适合 3–5 天的小旅行",
+    "Romantic": "浪漫氛围",
+    "Iconic": "经典必看",
+    "City Escape": "城市漫游",
+    "Nature Escape": "自然疗愈"
+  },
+  "confidence": {
+    "high": "高",
+    "medium": "中",
+    "low": "低"
+  },
+  "tags": {
+    "autumn": "秋日氛围",
+    "calm": "静谧感",
+    "city": "城市",
+    "city escape": "城市漫游",
+    "coastal": "海岸风景",
+    "cultural": "文化气息",
+    "early season": "早春花讯",
+    "easy trip": "轻松成行",
+    "family friendly": "适合亲子",
+    "festival": "花季庆典",
+    "food": "风味旅程",
+    "garden": "花园景观",
+    "historic": "历史风韵",
+    "iconic": "经典地标",
+    "island": "海岛气质",
+    "limited access": "观赏窗口短",
+    "mountain": "山野风光",
+    "nature": "自然风景",
+    "park": "公园漫步",
+    "photogenic": "出片感强",
+    "relaxed": "松弛节奏",
+    "road trip": "自驾路线",
+    "romantic": "浪漫氛围",
+    "scenic": "风景感",
+    "seasonal": "季节限定",
+    "seasonal contrast": "季节反差",
+    "summer": "夏日感",
+    "walkable": "适合散步",
+    "winter sun": "冬日暖阳"
+  },
+  "countries": {
+    "Japan": "日本",
+    "South Korea": "韩国",
+    "United States": "美国",
+    "Canada": "加拿大",
+    "Taiwan": "中国台湾",
+    "Netherlands": "荷兰",
+    "Turkey": "土耳其",
+    "France": "法国",
+    "Australia": "澳大利亚",
+    "Italy": "意大利",
+    "China": "中国",
+    "Portugal": "葡萄牙",
+    "Bulgaria": "保加利亚",
+    "South Africa": "南非",
+    "Argentina": "阿根廷",
+    "Thailand": "泰国",
+    "Spain": "西班牙",
+    "Chile": "智利"
+  },
+  "hero": {
+    "title": "此刻，世界正盛放于何处",
+    "description": "从月份出发，看花讯在地图上铺展开来，再把真正值得奔赴的旅程收进清单。Bloom Globe 更像一本季节旅行志，而不是预订页面。",
+    "monthBadge": "{{month}}出发灵感",
+    "destinationBadge": "{{count}} 个花季目的地",
+    "curatedBadge": "季节精选",
+    "eyebrow": "从月份开始",
+    "heading": "选择你的最佳观赏时机",
+    "planningBadge": "季节规划"
+  },
+  "monthSelector": {
+    "timelineEyebrow": "花期时间轴",
+    "timelineDescription": "选定月份后，地图、推荐与目的地卡片会同步更新。",
+    "nowBrowsing": "当前浏览",
+    "summary": "先定月份，再看这个时节最值得出发的盛放之地。"
+  },
+  "wishlist": {
+    "eyebrow": "心愿清单",
+    "title": "你的花季收藏",
+    "emptyDescription": "{{month}}还没有保存的目的地。你可以从地图或精选推荐里加入，留作之后慢慢比较。",
+    "savedCount": "已收藏 {{count}} 个目的地",
+    "savedCount_other": "已收藏 {{count}} 个目的地",
+    "emptyEyebrow": "清单仍为空",
+    "emptyTitle": "先把想去的地方留住",
+    "emptyBody": "把{{month}}值得惦记的花季旅程加入清单，之后再慢慢比较。"
+  },
+  "filters": {
+    "eyebrow": "细化这个季节",
+    "title": "收窄你的花季偏好",
+    "description": "先固定月份，再按花种或地区筛选，找到更贴近你心情的旅程线索。",
+    "flowerLabel": "花种",
+    "flowerAll": "全部花种",
+    "regionLabel": "地区",
+    "regionAll": "全球盛放中"
+  },
+  "map": {
+    "eyebrow": "世界花期地图",
+    "title": "此刻的盛放坐标",
+    "description": "按真实地理位置查看花季目的地，再点开其中一处，读一份更完整的旅行简报。",
+    "visibleMarkers": "{{count}} 个可见标记",
+    "visibleMarkers_other": "{{count}} 个可见标记",
+    "liveMonthView": "当月视角",
+    "clickMarkers": "点击标记查看",
+    "globeHint": "地球视图会围绕已选目的地聚焦",
+    "legendBlooming": "正在盛放",
+    "legendSelected": "当前选中",
+    "legendPeak": "接近盛放期",
+    "emptyEyebrow": "地图上暂无标记",
+    "emptyTitle": "这个视图下暂时没有匹配的花期目的地",
+    "emptyBody": "换一个月份，或放宽筛选条件，让地图重新热闹起来。",
+    "emptyBodyGlobe": "试着先选中一个目的地，让地球视图重新聚焦，或放宽筛选查看更多花讯。"
+  },
+  "recommendations": {
+    "eyebrow": "本月精选",
+    "title": "{{month}}季节精选",
+    "description": "这是一份更精炼的短名单，综合花期强度、风景辨识度与成行难度而来。",
+    "whyRecommended": "推荐理由",
+    "emptyEyebrow": "暂无精选",
+    "emptyTitle": "这个月份暂时没有合适的精选推荐",
+    "emptyBody": "换一个月份，或清除筛选条件，重新展开 {{month}} 的花季清单。"
+  },
+  "detail": {
+    "emptyEyebrow": "尚未聚焦目的地",
+    "emptyTitle": "请选择一个目的地",
+    "emptyBody": "从地图标记或推荐卡片中点开一处，即可查看花期、旅行提示与收藏入口。",
+    "bestViewingWindow": "最佳观赏期",
+    "seasonalStatus": "当前花况",
+    "tripLength": "建议行程",
+    "peakWindow": "最佳时段",
+    "variabilityNote": "波动提示",
+    "confidence": "可信度",
+    "bloomCalendar": "花期月历",
+    "calendarPeak": "{{month}}是最值得出发的盛放时刻。",
+    "calendarInWindow": "{{month}}仍处于可观赏花期之中。"
+  },
+  "feedback": {
+    "saved": "已将 {{destination}} 加入心愿清单",
+    "savedFallback": "已加入心愿清单"
+  }
+}

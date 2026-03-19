@@ -1,4 +1,7 @@
+"use client";
+
 import { DestinationBadge } from "@/lib/types";
+import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 interface BadgeProps {
@@ -30,11 +33,12 @@ export function DestinationBadgePill({
   badge: DestinationBadge;
   className?: string;
 }) {
+  const { getBadgeLabel } = useI18n();
   const tone = badge === "Peak Bloom" ? "accent" : "soft";
 
   return (
     <Badge tone={tone} className={className}>
-      {badge}
+      {getBadgeLabel(badge)}
     </Badge>
   );
 }

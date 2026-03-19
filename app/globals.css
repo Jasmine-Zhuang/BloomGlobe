@@ -4,8 +4,8 @@
 
 :root {
   color-scheme: light;
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Manrope", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
   --surface: rgba(255, 252, 247, 0.82);
   --surface-strong: rgba(255, 255, 255, 0.92);
   --border-soft: rgba(231, 215, 210, 0.9);
@@ -24,6 +24,10 @@ body {
     linear-gradient(180deg, #fffaf4 0%, #f8f1ea 46%, #f3ece3 100%);
   color: #2f352f;
   font-family: var(--font-sans);
+}
+
+html[data-locale="zh"] body {
+  letter-spacing: 0;
 }
 
 * {

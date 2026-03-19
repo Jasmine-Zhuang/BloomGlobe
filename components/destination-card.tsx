@@ -1,5 +1,14 @@
+"use client";
+
 import { DestinationBadgePill } from "@/components/ui/badge";
-import { FlowerArtwork } from "@/components/flower-artwork";
+import { DestinationImage } from "@/components/destination-image";
+import {
+  getLocalizedDestinationCopy,
+  getLocalizedDestinationName,
+  localizeSeasonText,
+  localizeTripLength,
+} from "@/lib/destination-localization";
+import { useI18n } from "@/lib/i18n";
 import { cn, getDisplayBadges, getRecommendationReason } from "@/lib/utils";
 import { Destination } from "@/lib/types";
 
@@ -20,8 +29,15 @@ export function DestinationCard({
   onToggleWishlist,
   className,
 }: DestinationCardProps) {
+  const { getCountryLabel, getFlowerLabel, getMonthLabel, getRegionLabel, locale, t } = useI18n();
   const badges = getDisplayBadges(destination, selectedMonth);
-  const reason = getRecommendationReason(destination, selectedMonth);
+  const copy = getLocalizedDestinationCopy(destination, locale);
+  const reason = getRecommendationReason(destination, selectedMonth, {
+    locale,
+    monthLabel: getMonthLabel(selectedMonth, "editorial"),
+    flowerLabel: getFlowerLabel(destination.flowerType),
+    tripLengthLabel: localizeTripLength(destination.idealTripLength, locale),
+  });
 
   return (
     <article
@@ -31,15 +47,8 @@ export function DestinationCard({
       )}
     >
       <button type="button" onClick={() => onSelect(destination)} className="block w-full text-left">
-        <div
-          className="relative h-40 w-full overflow-hidden"
-        >
-          <FlowerArtwork
-            flowerType={destination.flowerType}
-            title={destination.name}
-            className="h-full w-full"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.8),transparent_34%),linear-gradient(180deg,transparent,rgba(55,68,60,0.12))]" />
+        <div className="relative h-44 w-full overflow-hidden">
+          <DestinationImage destination={destination} className="h-full w-full" />
           <div className="absolute left-4 top-4 flex flex-wrap gap-2">
             {badges.slice(0, 2).map((badge) => (
               <DestinationBadgePill key={badge} badge={badge} />
@@ -49,18 +58,23 @@ export function DestinationCard({
 
         <div className="space-y-4 p-5">
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-rose/80">{destination.flowerType}</p>
-            <h3 className="mt-2 font-serif text-[1.7rem] leading-tight text-pine">{destination.name}</h3>
+            <p className="text-xs uppercase tracking-[0.24em] text-rose/80">{getFlowerLabel(destination.flowerType)}</p>
+            <h3 className="mt-2 font-serif text-[1.7rem] leading-tight text-pine">{getLocalizedDestinationName(destination, locale)}</h3>
             <p className="mt-1 text-sm text-pine/60">
-              {destination.country} • {destination.region}
+              {getCountryLabel(destination.country)} • {getRegionLabel(destination.region)}
             </p>
           </div>
 
-          <p className="text-sm leading-6 text-pine/78">{destination.shortDescription}</p>
+          <p className="text-sm leading-6 text-pine/78">{copy.shortDescription}</p>
 
           <div className="rounded-[1.3rem] bg-[#fcf7f2] p-4">
-            <p className="text-xs uppercase tracking-[0.22em] text-pine/45">Why it&apos;s recommended</p>
+            <p className="text-xs uppercase tracking-[0.22em] text-pine/45">{t("recommendations.whyRecommended")}</p>
             <p className="mt-2 text-sm leading-6 text-pine/72">{reason}</p>
+          </div>
+
+          <div className="flex items-center justify-between gap-3 rounded-[1.1rem] border border-[#efe1d9] bg-[#fffaf7] px-4 py-3 text-sm text-pine/68">
+            <span>{localizeSeasonText(destination.bestViewingText, locale)}</span>
+            <span>{localizeTripLength(destination.bestTripLength, locale)}</span>
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -82,7 +96,7 @@ export function DestinationCard({
               : "border-[#e6d7cf] bg-[#fffaf6] text-pine hover:border-rose hover:text-rose",
           )}
         >
-          {isWishlisted ? "Saved for later" : "Save for later"}
+          {isWishlisted ? t("common.buttons.saved") : t("common.buttons.save")}
         </button>
       </div>
     </article>

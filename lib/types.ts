@@ -25,6 +25,7 @@ export type FlowerType =
   | "Tulip"
   | "Lavender"
   | "Sunflower"
+  | "Rapeseed"
   | "Rose"
   | "Jacaranda"
   | "Plum Blossom"
@@ -48,10 +49,20 @@ export type DestinationBadge =
 
 export interface Destination {
   id: string;
+  destination: string;
   name: string;
   country: string;
   region: Region;
   flowerType: FlowerType;
+  latitude: number;
+  longitude: number;
+  bloomStartMonth: number;
+  bloomEndMonth: number;
+  bestViewingMonth: number;
+  bloomStartText: string;
+  bloomEndText: string;
+  bestViewingText: string;
+  peakWindow: string;
   bloomMonths: number[];
   peakMonths: number[];
   coordinates: {
@@ -59,13 +70,17 @@ export interface Destination {
     lng: number;
   };
   shortDescription: string;
+  whyVisit: string;
   longDescription: string;
   signatureExperience: string;
   travelTip: string;
+  travelTags: string[];
   idealTripLength: string;
+  bestTripLength: string;
   badges: DestinationBadge[];
   confidence?: ConfidenceLevel;
   variabilityNote?: string;
+  imageUrl?: string;
   imageHint?: string;
   image: {
     from: string;

@@ -5,9 +5,10 @@ interface EmptyStateProps {
   description: string;
   action?: React.ReactNode;
   className?: string;
+  eyebrow?: string;
 }
 
-export function EmptyState({ title, description, action, className }: EmptyStateProps) {
+export function EmptyState({ title, description, action, className, eyebrow = "No blooms selected" }: EmptyStateProps) {
   return (
     <div
       className={cn(
@@ -15,7 +16,7 @@ export function EmptyState({ title, description, action, className }: EmptyState
         className,
       )}
     >
-      <p className="text-xs uppercase tracking-[0.28em] text-rose/75">No blooms selected</p>
+      <p className="text-xs uppercase tracking-[0.28em] text-rose/75">{eyebrow}</p>
       <h3 className="mt-3 font-serif text-2xl text-pine">{title}</h3>
       <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-pine/68">{description}</p>
       {action ? <div className="mt-5">{action}</div> : null}

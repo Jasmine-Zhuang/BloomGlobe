@@ -1,13 +1,15 @@
+"use client";
+
 import { DestinationCard } from "@/components/destination-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useI18n } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { Destination } from "@/lib/types";
 
 interface RecommendedSectionProps {
   destinations: Destination[];
   selectedMonth: number;
-  selectedMonthLabel: string;
   wishlistIds: string[];
   isRefreshing: boolean;
   onSelectDestination: (destination: Destination) => void;
@@ -17,18 +19,20 @@ interface RecommendedSectionProps {
 export function RecommendedSection({
   destinations,
   selectedMonth,
-  selectedMonthLabel,
   wishlistIds,
   isRefreshing,
   onSelectDestination,
   onToggleWishlist,
 }: RecommendedSectionProps) {
+  const { getMonthLabel, t } = useI18n();
+  const selectedMonthLabel = getMonthLabel(selectedMonth, "editorial");
+
   return (
     <section className="glass-card rounded-[1.95rem] border border-white/70 p-5 shadow-bloom sm:p-6">
       <SectionHeading
-        eyebrow="Recommended This Month"
-        title={`${selectedMonthLabel} bloom escapes`}
-        description="A tighter shortlist shaped by bloom strength, signature scenery, and how easy each trip is to turn into a real plan."
+        eyebrow={t("recommendations.eyebrow")}
+        title={t("recommendations.title", { month: selectedMonthLabel })}
+        description={t("recommendations.description")}
       />
 
       {destinations.length > 0 ? (
@@ -57,8 +61,9 @@ export function RecommendedSection({
       ) : (
         <EmptyState
           className="mt-6"
-          title="No curated bloom picks yet"
-          description={`Try another month or clear a filter to reopen the ${selectedMonthLabel} bloom shortlist.`}
+          eyebrow={t("recommendations.emptyEyebrow")}
+          title={t("recommendations.emptyTitle")}
+          description={t("recommendations.emptyBody", { month: selectedMonthLabel })}
         />
       )}
     </section>

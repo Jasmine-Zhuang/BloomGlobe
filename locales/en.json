@@ -1,0 +1,198 @@
+{
+  "common": {
+    "appName": "Bloom Globe",
+    "language": {
+      "label": "Language",
+      "english": "EN",
+      "chinese": "中文"
+    },
+    "buttons": {
+      "save": "Save for later",
+      "saved": "Saved for later",
+      "remove": "Remove from wishlist",
+      "mapView": "Map View",
+      "globeView": "Globe View",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month"
+    },
+    "image": {
+      "preview": "Image Preview"
+    },
+    "status": {
+      "refreshingMap": "Refreshing bloom map"
+    }
+  },
+  "months": {
+    "editorial": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "short": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "numeric": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+  },
+  "regions": {
+    "North America": "North America",
+    "South America": "South America",
+    "Europe": "Europe",
+    "Asia": "Asia",
+    "Africa": "Africa",
+    "Oceania": "Oceania"
+  },
+  "flowers": {
+    "Cherry Blossom": "Cherry Blossom",
+    "Tulip": "Tulip",
+    "Lavender": "Lavender",
+    "Sunflower": "Sunflower",
+    "Rapeseed": "Rapeseed",
+    "Rose": "Rose",
+    "Jacaranda": "Jacaranda",
+    "Plum Blossom": "Plum Blossom",
+    "Cosmos": "Cosmos",
+    "Wildflower": "Wildflower",
+    "Wisteria": "Wisteria",
+    "Hydrangea": "Hydrangea",
+    "Lotus": "Lotus",
+    "Canola": "Canola",
+    "Protea": "Protea"
+  },
+  "badges": {
+    "Peak Bloom": "Peak Bloom",
+    "Best 3-5 Day Trip": "Best 3-5 Day Trip",
+    "Romantic": "Romantic",
+    "Iconic": "Iconic",
+    "City Escape": "City Escape",
+    "Nature Escape": "Nature Escape"
+  },
+  "confidence": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "tags": {
+    "autumn": "Autumn",
+    "calm": "Calm",
+    "city": "City",
+    "city escape": "City Escape",
+    "coastal": "Coastal",
+    "cultural": "Cultural",
+    "early season": "Early Season",
+    "easy trip": "Easy Trip",
+    "family friendly": "Family Friendly",
+    "festival": "Festival",
+    "food": "Food",
+    "garden": "Garden",
+    "historic": "Historic",
+    "iconic": "Iconic",
+    "island": "Island",
+    "limited access": "Limited Access",
+    "mountain": "Mountain",
+    "nature": "Nature",
+    "park": "Park",
+    "photogenic": "Photogenic",
+    "relaxed": "Relaxed",
+    "road trip": "Road Trip",
+    "romantic": "Romantic",
+    "scenic": "Scenic",
+    "seasonal": "Seasonal",
+    "seasonal contrast": "Seasonal Contrast",
+    "summer": "Summer",
+    "walkable": "Walkable",
+    "winter sun": "Winter Sun"
+  },
+  "countries": {
+    "Japan": "Japan",
+    "South Korea": "South Korea",
+    "United States": "United States",
+    "Canada": "Canada",
+    "Taiwan": "Taiwan",
+    "Netherlands": "Netherlands",
+    "Turkey": "Turkey",
+    "France": "France",
+    "Australia": "Australia",
+    "Italy": "Italy",
+    "China": "China",
+    "Portugal": "Portugal",
+    "Bulgaria": "Bulgaria",
+    "South Africa": "South Africa",
+    "Argentina": "Argentina",
+    "Thailand": "Thailand",
+    "Spain": "Spain",
+    "Chile": "Chile"
+  },
+  "hero": {
+    "title": "Where the world is blooming this month.",
+    "description": "Choose a month, scan the bloom map, and shortlist the trips that feel worth planning. Bloom Globe is designed as a seasonal travel editor, not a booking dashboard.",
+    "monthBadge": "{{month}} departures",
+    "destinationBadge": "{{count}} bloom-ready destinations",
+    "curatedBadge": "Curated seasonal picks",
+    "eyebrow": "Start With A Month",
+    "heading": "Pick your best viewing window",
+    "planningBadge": "Seasonal planning"
+  },
+  "monthSelector": {
+    "timelineEyebrow": "Bloom timeline",
+    "timelineDescription": "Choose a month and watch the bloom map, shortlist, and destination brief update in place.",
+    "nowBrowsing": "Now browsing",
+    "summary": "Start with the month, then compare where blooms feel strongest right now."
+  },
+  "wishlist": {
+    "eyebrow": "Saved Trips",
+    "title": "Your bloom shortlist",
+    "emptyDescription": "Nothing is saved yet for {{month}}. Add destinations from the map or curated picks to keep a private shortlist in this browser.",
+    "savedCount": "{{count}} destination saved for later.",
+    "savedCount_other": "{{count}} destinations saved for later.",
+    "emptyEyebrow": "Wishlist is empty",
+    "emptyTitle": "Save somewhere worth returning to",
+    "emptyBody": "Build a private shortlist for {{month}} and compare the bloom trips that still feel worth returning to later."
+  },
+  "filters": {
+    "eyebrow": "Refine The Season",
+    "title": "Narrow the bloom mood",
+    "description": "Keep the month fixed, then filter by flower type or region to find the trip shape that fits.",
+    "flowerLabel": "Flower type",
+    "flowerAll": "All flower styles",
+    "regionLabel": "Region",
+    "regionAll": "Anywhere in bloom"
+  },
+  "map": {
+    "eyebrow": "World Bloom Map",
+    "title": "Where the season is opening",
+    "description": "Compare bloom destinations by actual geography, then open one to read the destination brief and decide if it belongs on your shortlist.",
+    "visibleMarkers": "{{count}} visible marker",
+    "visibleMarkers_other": "{{count}} visible markers",
+    "liveMonthView": "Live month view",
+    "clickMarkers": "Click markers to inspect",
+    "globeHint": "Globe recenters on the selected bloom",
+    "legendBlooming": "Blooming now",
+    "legendSelected": "Selected",
+    "legendPeak": "Peak bloom likely",
+    "emptyEyebrow": "No visible markers",
+    "emptyTitle": "No bloom destinations match this view",
+    "emptyBody": "Try a different month or broaden your filters to bring the world back into bloom on the map.",
+    "emptyBodyGlobe": "Try selecting a destination to recenter the globe, or broaden your filters to bring more blooms back into view."
+  },
+  "recommendations": {
+    "eyebrow": "Recommended This Month",
+    "title": "{{month}} bloom escapes",
+    "description": "A tighter shortlist shaped by bloom strength, signature scenery, and how easy each trip is to turn into a real plan.",
+    "whyRecommended": "Why it's recommended",
+    "emptyEyebrow": "No editorial shortlist",
+    "emptyTitle": "No curated bloom picks yet",
+    "emptyBody": "Try another month or clear a filter to reopen the {{month}} bloom shortlist."
+  },
+  "detail": {
+    "emptyEyebrow": "No destination in focus",
+    "emptyTitle": "No destination selected",
+    "emptyBody": "Choose a marker or a recommendation card to see bloom timing, travel notes, and save options.",
+    "bestViewingWindow": "Best viewing window",
+    "seasonalStatus": "Seasonal status",
+    "tripLength": "Trip length",
+    "peakWindow": "Peak window",
+    "variabilityNote": "Variability note",
+    "confidence": "Confidence",
+    "bloomCalendar": "Bloom calendar",
+    "calendarPeak": "{{month}} is the prime bloom moment.",
+    "calendarInWindow": "{{month}} still sits inside the bloom window."
+  },
+  "feedback": {
+    "saved": "{{destination}} saved for later",
+    "savedFallback": "Saved for later"
+  }
+}
